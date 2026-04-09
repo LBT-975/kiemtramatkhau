@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra Mật khẩu</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
+        .container { max-width: 500px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Chương trình Kiểm tra Mật khẩu</h2>
+    <p>Kết quả kiểm tra sẽ được hiển thị qua thông báo (alert).</p>
+    <button onclick="batDauKiemTra()">Nhập mật khẩu ngay</button>
+</div>
+
+<script>
+    function kiemTraMatKhau(password) {
+        // 1. Kiểm tra độ dài tối thiểu 8 ký tự
+        if (password.length < 8) {
+            return "Mật khẩu phải có ít nhất 8 ký tự.";
+        }
+
+        // 2. Kiểm tra chữ cái viết hoa (A-Z)
+        if (!/[A-Z]/.test(password)) {
+            return "Mật khẩu phải chứa ít nhất một chữ cái viết hoa.";
+        }
+
+        // 3. Kiểm tra chữ cái viết thường (a-z)
+        if (!/[a-z]/.test(password)) {
+            return "Mật khẩu phải chứa ít nhất một chữ cái viết thường.";
+        }
+
+        // 4. Kiểm tra chữ số (0-9)
+        if (!/[0-9]/.test(password)) {
+            return "Mật khẩu phải chứa ít nhất một chữ số.";
+        }
+
+        // 5. Kiểm tra ký tự đặc biệt
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return "Mật khẩu phải chứa ít nhất một ký tự đặc biệt (@, #, $, %...).";
+        }
+
+        // Nếu vượt qua tất cả các bước trên thì mật khẩu hợp lệ
+        return "VALID";
+    }
+
+    function xacDinhDoManh(password) {
+        if (password.length === 8) {
+            return "Yếu";
+        } else if (password.length < 12) {
+            return "Trung bình";
+        } else {
+            return "Mạnh";
+        }
+    }
+
+    function batDauKiemTra() {
+        let hopLe = false;
+        
+        while (!hopLe) {
+            let pass = prompt("Vui lòng nhập mật khẩu của bạn:");
+            
+            // Trường hợp người dùng nhấn "Cancel"
+            if (pass === null) break;
+
+            let ketQua = kiemTraMatKhau(pass);
+
+            if (ketQua === "VALID") {
+                let doManh = xacDinhDoManh(pass);
+                alert("Mật khẩu hợp lệ!\nĐộ mạnh: " + doManh);
+                hopLe = true; // Thoát vòng lặp
+            } else {
+                alert("Lỗi: " + ketQua + "\nVui lòng thử lại.");
+            }
+        }
+    }
+
+    // Tự động chạy khi load trang (tùy chọn)
+    window.onload = batDauKiemTra;
+</script>
+
+</body>
+</html>
